@@ -1,33 +1,23 @@
-# Cross compiler
-CC      := aarch64-linux-gnu-gcc
-# Assembler executable
-AS      := aarch64-linux-gnu-gcc
-# Linker
-LD      := aarch64-linux-gnu-gcc
-# Emulator executable to boot the compiled os kernal
-EMU     := qemu-system-aarch64
-
-# Added -I../ so the compiler finds headers in the parent directory
-CFLAGS  := -Wall -Wextra -std=c99 -I../
-ASFLAGS := 
-
 all: kernel.elf
 
 kernel.elf: kernel.o boot.o progress.o libos.a
-	$(LD) kernel.o boot.o progress.o libos.a -o $@
+	aarch64-linux-gnu-ld -g -N -Ttext=0x10000 -o kernel.elf kernel.o boot.o progress.o libos.a
 
 kernel.o: kernel.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	aarch64-linux-gnu-gcc -g -pedantic -Wall -Wextra -fPIC -std=gnu2x -MMD -c kernel.c -o kernel.o
 
 boot.o: boot.S
-	$(AS) $(ASFLAGS) -c $< -o $@
+	aarch64-linux-gnu-gcc -g -MMD -c boot.S -o boot.o
 
 progress.o: progress.S
-	$(AS) $(ASFLAGS) -c $< -o $@
-
-libos.a:
+	aarch64-linux-gnu-gcc -g -MMD -c progress.S -o progress.o
 
 clean:
-	rm -f kernel.o boot.o progress.o kernel.elf
+	rm -f *.o *.d kernel.elf
 
-.PHONY: all clean
+run: kernel.elf
+	qemu-system-aarch64 -machine raspi3b -kernel kernel.elf
+
+debug: kernel.elf
+	qemu-system-aarch64 -machine raspi3b -S -s -kernel kernel.elf &
+	ddd --debugger 'gdb-multiarch -ex "target remote localhost:1234" -ex "break main" -ex "continue"' kernel.elf
