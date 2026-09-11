@@ -10,3 +10,9 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install -y build-essential gcc-aarch64-linux-gnu gdb-multiarch qemu-system-aarch64 ddd
 
 Verification: Run `aarch64-linux-gnu-gcc --version` and `qemu-system-aarch64 --version` and `ddd &` to confirm these are accessible.
+
+
+
+
+To compress to tarball:
+tar -czf bncastlebe42_hw1.tar.gz bncastlebe42_hw1/

@@ -16,7 +16,7 @@ int main(void)
         for (int i = 10; i <= 100; i += 10)
         {
             print_progress(19, 4, "Progress: ", i, 10);
-            wait_msec(500);
+            wait_msec(500000);
         }
     }
 

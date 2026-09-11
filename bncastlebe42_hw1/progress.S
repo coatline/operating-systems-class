@@ -113,6 +113,6 @@ print_progress:
         ldr x30, [sp]
 
         // Free the stack space
-        add sp, sp, #64
+        add sp, sp, #80
         // Return to the address in x30
         ret
