@@ -16,7 +16,7 @@ int main(void)
         for (int i = 10; i <= 100; i += 10)
         {
             print_progress(19, 4, "Progress: ", i, 10);
-            wait_msec(500000);
+            wait_msec(500);
         }
     }
 
@@ -25,8 +25,8 @@ int main(void)
 
 void boot_win(void)
 {
-    int pivotY = 17;
-    int pivotX = 4;
+    const int pivotY = 17;
+    const int pivotX = 4;
 
     const char *arr[] = {
         "Console",
@@ -36,9 +36,11 @@ void boot_win(void)
         "Processes"
     };
 
-    for (int i = 0; i < 5; i++)
+    int length = sizeof(arr) / sizeof(arr[0]);
+
+    for (int i = 0; i < length; i++)
     {
-        if (i == 0)
+        if (i == length - 1)
         {
             print_to(pivotY - i, pivotX, "[OK]");
         }
@@ -47,7 +49,30 @@ void boot_win(void)
             print_to(pivotY - i, pivotX, "[-]");
         }
 
-        print_to(pivotY - i, pivotX + 5, arr[i]);
+        print_to(pivotY - i, pivotX + 5, arr[length - i - 1]);
+    }
+
+    const int borderPivotY = 21;
+    const int borderPivotX = 1;
+    const int borderWidth = 56;
+
+    for (int i = 0; i < 11; i++)
+    {
+        if (i == 0 || i == 10)
+        {
+            for (int x = 0; x < borderWidth; x++)
+            {
+                if (x == 0 || x == 55)
+                    print_to(borderPivotY - i, borderPivotX + x, "+");
+                else
+                    print_to(borderPivotY - i, borderPivotX + x, "-");
+            }
+        }
+        else
+        {
+            print_to(borderPivotY - i, borderPivotX, "|");
+            print_to(borderPivotY - i, borderPivotX + borderWidth - 1, "|");
+        }
     }
 }
 
