@@ -2,7 +2,9 @@
 #define STACK_H
 
 #include <stdint.h>
+#include <stdalign.h>
 
+#define _MAX_PROCESSES 10
 #define _STACK_SIZE 1024
 
 struct Stack {
@@ -12,7 +14,7 @@ struct Stack {
 
 typedef struct Stack Stack_t;
 
-extern Stack_t Stacks[10];
+extern Stack_t Stacks[_MAX_PROCESSES];
 extern Stack_t *Stack_free_list;
 
 void init_stack_heap(void);

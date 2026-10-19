@@ -35,8 +35,6 @@ proc_hang:
     
 master:
 	mov sp, #0x07FFFFF0
-    bl uart_init
-    bl lfb_init
 	bl main
 boot_forever:
     b boot_forever

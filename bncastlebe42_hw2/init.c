@@ -41,15 +41,16 @@ void init(void)
 
 #include <stdint.h>
 
-extern PCB_t Pcbs[10];
+extern PCB_t Pcbs[_MAX_PROCESSES];
 extern PCB_t *Pcb_free_list;
-extern Stack_t Stacks[10];
+extern Stack_t Stacks[_MAX_PROCESSES];
 extern Stack_t *Stack_free_list;
 
 void init_pcb_heap(void)
 {
     Pcb_free_list = &Pcbs[0];
-    for (int i = 0; i < 10; i++) Pcbs[i].next = (i < 9) ? &Pcbs[i + 1] : 0;
+    for (int i = 0; i < _MAX_PROCESSES; i++)
+        Pcbs[i].next = (i + 1 < _MAX_PROCESSES) ? &Pcbs[i + 1] : 0;
 }
 
 PCB_t *Pcb_alloc(void)
@@ -64,7 +65,8 @@ PCB_t *Pcb_alloc(void)
 void init_stack_heap(void)
 {
     Stack_free_list = &Stacks[0];
-    for (int i = 0; i < 10; i++) Stacks[i].next = (i < 9) ? &Stacks[i + 1] : 0;
+    for (int i = 0; i < _MAX_PROCESSES; i++)
+        Stacks[i].next = (i + 1 < _MAX_PROCESSES) ? &Stacks[i + 1] : 0;
 }
 
 uint64_t *Stack_alloc(void)

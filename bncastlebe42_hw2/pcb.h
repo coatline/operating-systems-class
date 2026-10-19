@@ -2,20 +2,19 @@
 #define PCB_H
 
 #include <stdint.h>
-
-struct Stack;
+#include "stack.h"
 
 struct PCB {
     uint64_t *sp;
     int pid;
     int (*fun)(void);
-    struct Stack *stack;
+    Stack_t *stack;
     struct PCB *next;
 };
 
 typedef struct PCB PCB_t;
 
-extern PCB_t Pcbs[10];
+extern PCB_t Pcbs[_MAX_PROCESSES];
 extern PCB_t *Pcb_free_list;
 
 PCB_t *Pcb_alloc(void);
