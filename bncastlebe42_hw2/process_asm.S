@@ -72,7 +72,7 @@ restore_context:
     ldp x26, x27, [sp, #208]
     ldr x28, [sp, #224]
 
-    ldp x29, x30, [sp], #16 // restore frame pointer and return address
+    ldp x29, x30, [sp, #240] // restore frame pointer and return address
 
     // pop the context from the stack
     add sp, sp, 256

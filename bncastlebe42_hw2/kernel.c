@@ -17,12 +17,14 @@ void ready_to_run(void);
 void restore_context(void);
 int p1(void), p2(void), p3(void), p4(void);
 void boot_win(void);
+void draw_process_boxes(void);
 int print_progress(unsigned int, unsigned int, const char *, unsigned int, unsigned int);
 int strlen(const char *s);
 
 int main(void)
 {
     init();
+    draw_process_boxes();
     if (spawn_process(p1) || spawn_process(p2) || spawn_process(p3) || spawn_process(p4))
         while(1);
 
@@ -30,6 +32,31 @@ int main(void)
     restore_context();
 
     while(1);
+}
+
+void draw_process_boxes(void)
+{
+    for (int process = 0; process < 4; process++)
+    {
+        int left = (process < 2) ? 3 : 25;
+        int right = left + 15;
+        int top = (process % 2 == 0) ? 10 : 12;
+        int bottom = top + 2;
+
+        for (int x = left; x <= right; x++)
+        {
+            print_to(top, x, (x == left || x == right) ? "+" : "-");
+            print_to(bottom, x, (x == left || x == right) ? "+" : "-");
+        }
+
+        print_to(top + 1, left, "|");
+        print_to(top + 1, right, "|");
+    }
+
+    print_to(11, 4, "Process 1: ");
+    print_to(13, 4, "Process 2: ");
+    print_to(11, 26, "Process 3: ");
+    print_to(13, 26, "Process 4: ");
 }
 
 void boot_win(void)
@@ -50,7 +77,7 @@ void boot_win(void)
     {
         if (i == 0 || i == 10)
         {
-            for (int x = 0; x < width; ++x)
+            for (int x = 0; x < width; x++)
                 print_to(borderY - i, borderX + x, (x == 0 || x == width - 1) ? "+" : "-");
         }
         else
