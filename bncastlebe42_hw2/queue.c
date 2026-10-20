@@ -14,7 +14,10 @@ void q_enqueue(PCB_Q_t *q, PCB_t *pcb)
     PCB_t *node = Pcb_alloc();
 
     if (node != 0) {
-        *node = *pcb;
+        node->sp = pcb->sp;
+        node->pid = pcb->pid;
+        node->fun = pcb->fun;
+        node->stack = pcb->stack;
         node->next = 0;
 
         pcb->next = Pcb_free_list;

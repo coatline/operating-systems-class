@@ -34,13 +34,14 @@ int main(void)
     while(1);
 }
 
+// this is just drawing the boxes for the processes, not actually running them
 void draw_process_boxes(void)
 {
     for (int process = 0; process < 4; process++)
     {
-        int left = (process < 2) ? 3 : 25;
+        int left = (process < 2) ? 60 : 82;
         int right = left + 15;
-        int top = (process % 2 == 0) ? 10 : 12;
+        int top = (process % 2 == 0) ? 15 : 17;
         int bottom = top + 2;
 
         for (int x = left; x <= right; x++)
@@ -53,10 +54,6 @@ void draw_process_boxes(void)
         print_to(top + 1, right, "|");
     }
 
-    print_to(11, 4, "Process 1: ");
-    print_to(13, 4, "Process 2: ");
-    print_to(11, 26, "Process 3: ");
-    print_to(13, 26, "Process 4: ");
 }
 
 void boot_win(void)

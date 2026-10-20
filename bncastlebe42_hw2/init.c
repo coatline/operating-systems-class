@@ -18,6 +18,8 @@ void init(void)
     print_progress(19, 4, "Console: ", 50, 20);
     wait_msec(wait_time);
     lfb_init();
+
+    // for some reason it won't display the boot window until after the lfb_init() call
     boot_win();
     print_progress(19, 4, "Console: ", 100, 20);
     wait_msec(wait_time);

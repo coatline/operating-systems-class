@@ -53,13 +53,13 @@ int is_prime(int n);
 
 int p1(void)
 {
-    print_to(11, 4, "Process 1: ");
+    print_to(16, 61, "Process 1: ");
 
     while (1)
     {
         for (int i = 0; i < 10; i++)
         {
-            putc_to(11, 15, (char)('0' + i));
+            putc_to(16, 72, (char)('0' + i));
             is_prime(i);
             dispatch();
         }
@@ -68,13 +68,13 @@ int p1(void)
 
 int p2(void)
 {
-    print_to(13, 4, "Process 2: ");
+    print_to(18, 61, "Process 2: ");
 
     while (1)
     {
         for (int i = 0; i < 10; i++)
         {
-            putc_to(13, 15, (char)('0' + i));
+            putc_to(18, 72, (char)('0' + i));
             is_prime(i);
             dispatch();
         }
@@ -83,13 +83,13 @@ int p2(void)
 
 int p3(void)
 {
-    print_to(11, 26, "Process 3: ");
+    print_to(16, 83, "Process 3: ");
 
     while (1)
     {
         for (int i = 0; i < 10; i++)
         {
-            putc_to(11, 37, (char)('0' + i));
+            putc_to(16, 94, (char)('0' + i));
             is_prime(i);
             dispatch();
         }
@@ -98,13 +98,13 @@ int p3(void)
 
 int p4(void)
 {
-    print_to(13, 26, "Process 4: ");
+    print_to(18, 83, "Process 4: ");
 
     while (1)
     {
         for (int i = 0; i < 10; i++)
         {
-            putc_to(13, 37, (char)('0' + i));
+            putc_to(18, 94, (char)('0' + i));
             is_prime(i);
             dispatch();
         }
