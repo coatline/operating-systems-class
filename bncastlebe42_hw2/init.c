@@ -11,31 +11,32 @@ void init(void)
 {
     boot_win();
     print_progress(19, 4, "Console: ", 0, 20);
-    wait_msec(1000000);
+    wait_msec(10000);
     uart_init();
     print_progress(19, 4, "Console: ", 50, 20);
-    wait_msec(1000000);
+    wait_msec(10000);
     lfb_init();
     print_progress(19, 4, "Console: ", 100, 20);
-    wait_msec(1000000);
-    print_to(13, 4, "[OK]");
+    wait_msec(10000);
+    // #AI Generated: these rows match the shifted boot status list in boot_win().
+    print_to(14, 4, "[OK]");
 
     print_progress(19, 4, "Memory: ", 0, 20);
-    wait_msec(1000000);
+    wait_msec(10000);
     init_pcb_heap();
     print_progress(19, 4, "Memory: ", 50, 20);
-    wait_msec(1000000);
+    wait_msec(10000);
     init_stack_heap();
     print_progress(19, 4, "Memory: ", 100, 20);
-    wait_msec(1000000);
-    print_to(12, 4, "[OK]");
+    wait_msec(10000);
+    print_to(15, 4, "[OK]");
 
     print_progress(19, 4, "Kernel: ", 0, 20);
-    wait_msec(1000000);
+    wait_msec(10000);
     q_init(&Ready_q);
     print_progress(19, 4, "Kernel: ", 100, 20);
-    wait_msec(1000000);
-    print_to(11, 4, "[OK]");
+    wait_msec(10000);
+    print_to(16, 4, "[OK]");
 }
 
 
