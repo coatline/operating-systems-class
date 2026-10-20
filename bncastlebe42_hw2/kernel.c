@@ -34,9 +34,7 @@ int main(void)
 
 void boot_win(void)
 {
-    // #AI Generated: move the status list down so process output on row 13 has its own line.
     const int pivotY = 18, pivotX = 4;
-    // #AI Generated: leave row 11 clear for the process output specified by the assignment.
     const int borderY = 22, borderX = 1, width = 56;
     const char *arr[] = {"Console", "Memory", "Kernel", "Interrupts", "Processes"};
 

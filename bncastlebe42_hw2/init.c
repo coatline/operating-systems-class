@@ -9,33 +9,35 @@ int print_progress(unsigned int row, unsigned int column, const char *message, u
 
 void init(void)
 {
+    int wait_time = 1000000;
     boot_win();
+
     print_progress(19, 4, "Console: ", 0, 20);
-    wait_msec(10000);
+    wait_msec(wait_time);
     uart_init();
     print_progress(19, 4, "Console: ", 50, 20);
-    wait_msec(10000);
+    wait_msec(wait_time);
     lfb_init();
+    boot_win();
     print_progress(19, 4, "Console: ", 100, 20);
-    wait_msec(10000);
-    // #AI Generated: these rows match the shifted boot status list in boot_win().
+    wait_msec(wait_time);
     print_to(14, 4, "[OK]");
-
+    
     print_progress(19, 4, "Memory: ", 0, 20);
-    wait_msec(10000);
+    wait_msec(wait_time);
     init_pcb_heap();
     print_progress(19, 4, "Memory: ", 50, 20);
-    wait_msec(10000);
+    wait_msec(wait_time);
     init_stack_heap();
     print_progress(19, 4, "Memory: ", 100, 20);
-    wait_msec(10000);
+    wait_msec(wait_time);
     print_to(15, 4, "[OK]");
-
+    
     print_progress(19, 4, "Kernel: ", 0, 20);
-    wait_msec(10000);
+    wait_msec(wait_time);
     q_init(&Ready_q);
     print_progress(19, 4, "Kernel: ", 100, 20);
-    wait_msec(10000);
+    wait_msec(wait_time);
     print_to(16, 4, "[OK]");
 }
 
