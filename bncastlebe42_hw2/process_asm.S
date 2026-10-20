@@ -3,20 +3,18 @@
 .global dispatch
 .type dispatch, %function
 dispatch:
-    # Save caller's frame pointer and return address
-    sp = sp - 16
-    [sp] = x29
-    [sp + 8] = x30
+    # save caller's frame pointer and return address
+    stp x29, x30, [sp, #-16]!
 
     bl save_rest_of_context
     bl schedule
-    bl restore_context
+    bl restore_context 
 
 .global save_rest_of_context
 .type save_rest_of_context, %function
 save_rest_of_context:
-    ps = ps - 16*15
-
+    sub sp, sp, #240
+    
     stp x0, x1, [sp, #0]
     stp x2, x3, [sp, #16]
     stp x4, x5, [sp, #32]
@@ -34,13 +32,13 @@ save_rest_of_context:
     str x28, [sp, #224]
     
     mrs x0, SPSR_EL1
-    str x0, [sp, #250]
+    str x0, [sp, #232]
 
     mov x0, sp
     ldr x1, =Running
     ldr x1, [x1] 
     // this is why the first element in the PCB struct is sp
-    str x0, [x1, #8]  // Running->sp = sp
+    str x0, [x1] // Running->sp = sp
 
     ret
 
@@ -54,8 +52,28 @@ restore_context:
     // move the stack pointer to the context of the running process
     mov sp, x2
 
-    ldr x0, [sp, #250]
+    // load the PSTATE
+    ldr x0, [sp, #232]
     msr SPSR_EL1, x0
 
-    /* TODO: load Running->sp, restore PSTATE and x0-x30, then return. */
+    ldp x0, x1, [sp, #0]
+    ldp x2, x3, [sp, #16]
+    ldp x4, x5, [sp, #32]
+    ldp x6, x7, [sp, #48]
+    ldp x8, x9, [sp, #64]
+    ldp x10, x11, [sp, #80]
+    ldp x12, x13, [sp, #96]
+    ldp x14, x15, [sp, #112]
+    ldp x16, x17, [sp, #128]
+    ldp x18, x19, [sp, #144]
+    ldp x20, x21, [sp, #160]
+    ldp x22, x23, [sp, #176]
+    ldp x24, x25, [sp, #192]
+    ldp x26, x27, [sp, #208]
+    ldr x28, [sp, #224]
+
+    ldp x29, x30, [sp], #16 // restore frame pointer and return address
+
+    // pop the context from the stack
+    add sp, sp, 256
     ret
