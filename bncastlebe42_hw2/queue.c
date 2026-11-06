@@ -11,27 +11,13 @@ void q_enqueue(PCB_Q_t *q, PCB_t *pcb)
 {
     if (q == 0 || pcb == 0) return;
 
-    PCB_t *node = Pcb_alloc();
-
-    if (node != 0) {
-        node->sp = pcb->sp;
-        node->pid = pcb->pid;
-        node->fun = pcb->fun;
-        node->stack = pcb->stack;
-        node->next = 0;
-
-        pcb->next = Pcb_free_list;
-        Pcb_free_list = pcb;
-    } else {
-        node = pcb;
-        node->next = 0;
-    }
+    pcb->next = 0;
 
     if (q->tail != 0)
-        q->tail->next = node;
+        q->tail->next = pcb;
     else
-        q->head = node;
-    q->tail = node;
+        q->head = pcb;
+    q->tail = pcb;
 }
 
 PCB_t *q_dequeue(PCB_Q_t *q)
