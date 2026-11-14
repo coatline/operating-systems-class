@@ -1,7 +1,7 @@
 .global print_progress
 .type print_progress, %function
 .extern print_to // (row, column, label address)
-.extern strlen // (const char *s)
+.extern string_length // (const char *s)
 .extern putc_to // (row, column, character)
 
 .section .text
@@ -55,7 +55,7 @@ print_progress:
 
     // Get the length of the label string
     mov x0, x21 // message address parameter
-    bl strlen
+    bl string_length
     mov w25, w0 // w25 = the length of the label string
 
     mov w26, #'='

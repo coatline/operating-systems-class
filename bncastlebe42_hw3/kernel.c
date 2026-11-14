@@ -19,7 +19,7 @@ int p1(void), p2(void), p3(void), p4(void);
 void boot_win(void);
 void draw_process_boxes(void);
 int print_progress(unsigned int, unsigned int, const char *, unsigned int, unsigned int);
-int strlen(const char *s);
+int string_length(const char *s);
 
 int main(void)
 {
@@ -85,7 +85,7 @@ void boot_win(void)
     }
 }
 
-int strlen(const char *s)
+int string_length(const char *s)
 {
     int n = 0;
 
