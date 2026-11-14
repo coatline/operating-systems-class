@@ -1,0 +1,7 @@
+int term_txtheight();
+int term_txtwidth();
+void print_to(unsigned int row, unsigned int col, const char *str);
+void putc_to(unsigned int row, unsigned int col, const char c);
+void uart_init(void);
+void lfb_init(void);
+void wait_msec(unsigned int);
