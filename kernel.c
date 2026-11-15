@@ -12,10 +12,8 @@ PCB_t *Running;
 int next_pid = 1;
 
 void init(void);
-int spawn_process(int (*pfun)(void));
 void ready_to_run(void);
 void restore_context(void);
-int p1(void), p2(void), p3(void), p4(void);
 void boot_win(void);
 void draw_process_boxes(void);
 int print_progress(unsigned int, unsigned int, const char *, unsigned int, unsigned int);
@@ -25,9 +23,6 @@ int main(void)
 {
     init();
     draw_process_boxes();
-    if (spawn_process(p1) || spawn_process(p2) || spawn_process(p3) || spawn_process(p4))
-        while(1);
-
     ready_to_run();
     restore_context();
 

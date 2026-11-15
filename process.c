@@ -52,7 +52,6 @@ int p1(void)
         {
             putc_to(16, 72, (char)('0' + i));
             is_prime(i);
-            dispatch();
         }
     }
 }
@@ -67,7 +66,6 @@ int p2(void)
         {
             putc_to(18, 72, (char)('0' + i));
             is_prime(i);
-            dispatch();
         }
     }
 }
@@ -82,7 +80,6 @@ int p3(void)
         {
             putc_to(16, 94, (char)('0' + i));
             is_prime(i);
-            dispatch();
         }
     }
 }
@@ -97,7 +94,6 @@ int p4(void)
         {
             putc_to(18, 94, (char)('0' + i));
             is_prime(i);
-            dispatch();
         }
     }
 }
