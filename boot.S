@@ -52,5 +52,10 @@ el1_entry:
     //msr vbar_el1, x0 
     //bl uart_init
     //bl lfb_init
+
+	// Allow compiler generated FP and SIMD instructions in C code at EL0 and EL1
+	mov x0, #0x300000
+	msr cpacr_el1, x0
+	
 	bl	main
 	b 	proc_hang		// should never come here
