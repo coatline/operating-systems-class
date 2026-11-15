@@ -14,7 +14,8 @@ int spawn_process(int (*pfun)(void))
     uint64_t *sp = stack->stack + _STACK_SIZE;
     for (int i = 0; i < 32; i++)
         *--sp = 0;
-    sp[31] = (uint64_t)pfun;
+
+    sp[30] = (uint64_t)pfun;
 
     pcb->stack = stack;
     pcb->sp = sp;

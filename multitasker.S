@@ -1,5 +1,11 @@
 .text
 
+.section .rodata
+unsupported_message:
+    .asciz "Unsupported exception"
+
+.extern print_to
+
 .global setup_EVT
 .type setup_EVT, %function
 setup_EVT:
@@ -43,7 +49,10 @@ vector_table:
     b unsupported
 
 unsupported:
-    print_to(0, 0, "Unsupported exception");
+    mov     x0, 0
+    mov     x1, 0
+    ldr     x2, =unsupported_message
+    bl      print_to
     loop:
         b loop
 

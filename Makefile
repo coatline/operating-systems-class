@@ -1,7 +1,7 @@
 all: kernel.elf
 
-kernel.elf: kernel.o init.o queue.o process.o process_asm.o boot.o progress.o libos.a
-	aarch64-linux-gnu-ld -g -N -Ttext=0x10000 -o kernel.elf kernel.o init.o queue.o process.o process_asm.o boot.o progress.o libos.a
+kernel.elf: kernel.o init.o queue.o process.o process_asm.o multitasker.o boot.o progress.o libos.a
+	aarch64-linux-gnu-ld -g -N -Ttext=0x10000 -o kernel.elf kernel.o init.o queue.o process.o process_asm.o multitasker.o boot.o progress.o libos.a
 
 kernel.o: kernel.c
 	aarch64-linux-gnu-gcc -g -pedantic -Wall -Wextra -fPIC -fno-stack-protector -std=gnu2x -MMD -c kernel.c -o kernel.o
@@ -21,6 +21,9 @@ process.o: process.c process.h queue.h pcb.h stack.h
 process_asm.o: process_asm.S
 	aarch64-linux-gnu-gcc -g -MMD -c process_asm.S -o process_asm.o
 
+multitasker.o: multitasker.S
+	aarch64-linux-gnu-gcc -g -MMD -c multitasker.S -o multitasker.o
+
 progress.o: progress.S
 	aarch64-linux-gnu-gcc -g -MMD -c progress.S -o progress.o
 
@@ -30,8 +33,8 @@ clean:
 -include *.d
 
 run: kernel.elf
-	qemu-system-aarch64 -machine raspi3 -kernel kernel.elf
+	qemu-system-aarch64 -machine raspi3b -kernel kernel.elf
 
 debug: kernel.elf
-	qemu-system-aarch64 -machine raspi3 -S -s -kernel kernel.elf &
+	qemu-system-aarch64 -machine raspi3b -S -s -kernel kernel.elf &
 	ddd --debugger 'gdb-multiarch -ex "target remote localhost:1234" -ex "break main" -ex "continue"' kernel.elf
