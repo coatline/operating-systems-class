@@ -10,11 +10,14 @@ int spawn_process(int (*pfun)(void))
     PCB_t *pcb = Pcb_alloc();
     if (pcb == 0) return -1;
 
-    // Clear data for a new register starting at the top of the stack
-    uint64_t *sp = stack->stack + _STACK_SIZE;
-    for (int i = 0; i < 32; i++)
-        *--sp = 0;
+    // Allocate space for process context (272 bytes)
+    uint64_t *sp = stack->stack + _STACK_SIZE - 34;
 
+    // initialize to 0
+    for (int i = 0; i < 34; i++)
+        sp[i] = 0;
+
+    // Set ELR_EL1 to the function the process should run
     sp[30] = (uint64_t)pfun;
 
     pcb->stack = stack;

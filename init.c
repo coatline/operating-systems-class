@@ -5,6 +5,8 @@
 #include "process.h"
 
 extern PCB_Q_t Ready_q;
+void setup_EVT(void);
+void init_timer(void);
 void boot_win(void);
 int print_progress(unsigned int row, unsigned int column, const char *message, unsigned int percent, unsigned int width);
 int p1(void), p2(void), p3(void), p4(void);
@@ -21,7 +23,7 @@ void init(void)
     wait_msec(wait_time);
     print_progress(19, 4, "Console: ", 100, 20);
     wait_msec(wait_time);
-    print_to(14, 4, "[OK]");
+    print_to(18, 4, "[OK]");
 
     print_progress(19, 4, "Memory: ", 0, 20);
     wait_msec(wait_time);
@@ -31,7 +33,7 @@ void init(void)
     init_stack_heap();
     print_progress(19, 4, "Memory: ", 100, 20);
     wait_msec(wait_time);
-    print_to(15, 4, "[OK]");
+    print_to(17, 4, "[OK]");
 
     print_progress(19, 4, "Kernel: ", 0, 20);
     wait_msec(wait_time);
@@ -41,24 +43,22 @@ void init(void)
     print_to(16, 4, "[OK]");
 
     print_progress(19, 4, "Interrupts: ", 0, 20);
-    wait_msec(wait_time);
+    setup_EVT();
+    print_progress(19, 4, "Interrupts: ", 50, 20);
+    init_timer();
     print_progress(19, 4, "Interrupts: ", 100, 20);
-    wait_msec(wait_time);
-    print_to(17, 4, "[OK]");
+    print_to(15, 4, "[OK]");
 
     print_progress(19, 4, "Processes: ", 0, 20);
     spawn_process(p1);
-    wait_msec(wait_time);
     print_progress(19, 4, "Processes: ", 25, 20);
     spawn_process(p2);
-    wait_msec(wait_time);
     print_progress(19, 4, "Processes: ", 50, 20);
     spawn_process(p3);
-    wait_msec(wait_time);
     print_progress(19, 4, "Processes: ", 75, 20);
     spawn_process(p4);
-    wait_msec(wait_time);
-    print_to(17, 4, "[OK]");
+    print_progress(19, 4, "Processes: ", 100, 20);
+    print_to(14, 4, "[OK]");
 }
 
 #include <stdint.h>

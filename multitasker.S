@@ -4,7 +4,7 @@
 unsupported_message:
     .asciz "Unsupported exception"
 
-.extern print_to
+.text
 
 .global setup_EVT
 .type setup_EVT, %function
@@ -14,23 +14,24 @@ setup_EVT:
     msr     VBAR_EL1, x0        // Set the vector base address
     ret
 
+// Each vector is 128 bytes
+.balign 2048
 vector_table:
- .balign 128
     b unsupported
 .balign 128
-    b dispatch
+    b dispatch     
 .balign 128
-    b unsupported
+    b unsupported   
 .balign 128
-    b unsupported
+    b unsupported   
 .balign 128
     b unsupported
 .balign 128
     b dispatch    // yes
 .balign 128
-    b unsupported
+    b unsupported   
 .balign 128
-    b unsupported
+    b unsupported  
 .balign 128
     b unsupported
 .balign 128
@@ -48,9 +49,11 @@ vector_table:
 .balign 128
     b unsupported
 
+.global unsupported
+.type unsupported, %function
 unsupported:
-    mov     x0, 0
-    mov     x1, 0
+    mov     x0, #0
+    mov     x1, #0
     ldr     x2, =unsupported_message
     bl      print_to
     loop:
